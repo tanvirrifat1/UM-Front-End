@@ -8,6 +8,8 @@ import Form from "@/components/Forms/Form";
 import FromInput from "@/components/Forms/FromInput";
 import { SubmitHandler } from "react-hook-form";
 
+import { GoogleOutlined } from "@ant-design/icons";
+
 type FromValues = {
   id?: string;
   password?: string;
@@ -22,18 +24,38 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Row>
-        <Col sm={12} md={16} lg={16}>
+      <Row
+        justify="center"
+        align="middle"
+        style={{
+          minHeight: "100vh",
+        }}
+      >
+        <Col sm={12} md={16} lg={8}>
           <Image src={img} alt="" width={500} />
         </Col>
         <Col sm={12} md={8} lg={8}>
-          <h1>First login your account</h1>
+          <h1 style={{ margin: "15px 0px" }}>First login your account</h1>
           <div>
             <Form submitHandler={onSubmit}>
-              <div>
+              <div
+                style={{
+                  margin: "15px 0px",
+                  width: "70%",
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+              >
                 <FromInput name="id" type="text" size="large" label="User Id" />
               </div>
-              <div>
+              <div
+                style={{
+                  margin: "15px 0px",
+                  width: "70%",
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+              >
                 <FromInput
                   name="password"
                   type="password"
@@ -41,8 +63,31 @@ const LoginPage = () => {
                   label="User Password"
                 />
               </div>
-              <Button type="primary" htmlType="submit">
-                Login
+              <Row>
+                <Button
+                  style={{
+                    margin: "15px 0px",
+                    width: "70%",
+                    alignItems: "center",
+                    alignContent: "center",
+                  }}
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Login
+                </Button>
+              </Row>
+              <Button
+                style={{
+                  margin: "15px 0px",
+                  width: "70%",
+
+                  alignItems: "center",
+                  alignContent: "center",
+                }}
+                type="primary"
+              >
+                <GoogleOutlined />
               </Button>
             </Form>
           </div>
