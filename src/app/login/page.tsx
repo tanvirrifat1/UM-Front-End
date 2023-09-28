@@ -17,6 +17,7 @@ import {
 } from "@/services/auth.service";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 type FromValues = {
   id?: string;
@@ -25,7 +26,8 @@ type FromValues = {
 
 const LoginPage = () => {
   // console.log(getUserInfo());
-  console.log(isLoggedIn());
+  // console.log(isLoggedIn());
+  const router = useRouter();
 
   const [userLogin] = useUserLoginMutation();
 
@@ -33,6 +35,11 @@ const LoginPage = () => {
     try {
       const res = await userLogin({ ...data }).unwrap();
       storeUserInfo({ accessToken: res?.data?.accessToken });
+
+      if (res?.data.accessToken) {
+        router.push("/profile");
+      }
+
       Swal.fire({
         title: "Login Successfully",
         showClass: {
