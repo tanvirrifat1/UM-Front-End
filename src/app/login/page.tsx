@@ -15,6 +15,8 @@ import {
   isLoggedIn,
   storeUserInfo,
 } from "@/services/auth.service";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 type FromValues = {
   id?: string;
@@ -31,6 +33,15 @@ const LoginPage = () => {
     try {
       const res = await userLogin({ ...data }).unwrap();
       storeUserInfo({ accessToken: res?.data?.accessToken });
+      Swal.fire({
+        title: "Login Successfully",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
       console.log(res);
     } catch (error) {
       console.error(error);
