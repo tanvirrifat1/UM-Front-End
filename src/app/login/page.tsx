@@ -10,7 +10,11 @@ import { SubmitHandler } from "react-hook-form";
 
 import { GoogleOutlined } from "@ant-design/icons";
 import { useUserLoginMutation } from "@/redux/api/authApi";
-import { storeUserInfo } from "@/services/auth.service";
+import {
+  getUserInfo,
+  isLoggedIn,
+  storeUserInfo,
+} from "@/services/auth.service";
 
 type FromValues = {
   id?: string;
@@ -18,12 +22,16 @@ type FromValues = {
 };
 
 const LoginPage = () => {
+  // console.log(getUserInfo());
+  console.log(isLoggedIn());
+
   const [userLogin] = useUserLoginMutation();
 
-  const onSubmit: SubmitHandler<FromValues> = async (data) => {
+  const onSubmit: SubmitHandler<FromValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
       storeUserInfo({ accessToken: res?.data?.accessToken });
+      console.log(res);
     } catch (error) {
       console.error(error);
     }
