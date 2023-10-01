@@ -11,7 +11,7 @@ import {
   theme,
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { removeUserInfo } from "@/services/auth.service";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { authKey } from "@/Constants/storageKey";
 import { useRouter } from "next/navigation";
 const { Header: AntHeader } = Layout;
@@ -23,6 +23,8 @@ const Header = () => {
     removeUserInfo(authKey);
     router.push("/login");
   };
+
+  const { role } = getUserInfo() as any;
 
   const items: MenuProps["items"] = [
     {
@@ -43,6 +45,14 @@ const Header = () => {
           height: "100%",
         }}
       >
+        <p
+          style={{
+            margin: "0px 5px",
+            fontSize: "16px",
+          }}
+        >
+          {role}
+        </p>
         <Dropdown menu={{ items }}>
           <Space wrap size={16}>
             <Avatar

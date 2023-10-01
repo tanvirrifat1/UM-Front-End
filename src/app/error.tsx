@@ -8,6 +8,7 @@ const ErrorPage = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        color: "red",
       }}
     >
       <h1>Something went wrong!</h1>

@@ -3,7 +3,7 @@
 import Contains from "@/components/ui/Contains";
 import Sidebar from "@/components/ui/Sidebar";
 import { isLoggedIn } from "@/services/auth.service";
-import { Layout } from "antd";
+import { Layout, Row, Space, Spin } from "antd";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -21,17 +21,17 @@ const DashBoardLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!loading) {
     return (
-      <p
+      <Row
+        justify="center"
+        align="middle"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           height: "100vh",
-          fontSize: "2rem",
         }}
       >
-        Loading...
-      </p>
+        <Space>
+          <Spin tip="Loading" size="large"></Spin>
+        </Space>
+      </Row>
     );
   }
 
