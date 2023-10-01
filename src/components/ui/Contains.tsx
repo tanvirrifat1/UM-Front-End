@@ -3,6 +3,7 @@
 import React from "react";
 import { Layout } from "antd";
 import UMbreadCrumb from "./UMbreadCrumb";
+import Header from "./Header";
 
 const { Content } = Layout;
 
@@ -16,6 +17,7 @@ const Contains = ({ children }: { children: React.ReactNode }) => {
         color: "black",
       }}
     >
+      <Header />
       <UMbreadCrumb
         items={[
           {
