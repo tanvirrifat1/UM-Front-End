@@ -6,12 +6,14 @@ import { Breadcrumb, Layout, Menu, theme, MenuProps } from "antd";
 
 import { sidebarItems } from "@/Constants/sidebarItems";
 import { USER_ROLE } from "@/Constants/role";
+import { getUserInfo } from "@/services/auth.service";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const role = USER_ROLE.STUDENT;
-
+  const { role } = getUserInfo() as any;
+  // const role = USER_ROLE.STUDENT;
+  console.log(role);
   return (
     <Sider
       collapsible
