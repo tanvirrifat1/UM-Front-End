@@ -10,12 +10,8 @@ import { SubmitHandler } from "react-hook-form";
 
 import { GoogleOutlined } from "@ant-design/icons";
 import { useUserLoginMutation } from "@/redux/api/authApi";
-import {
-  getUserInfo,
-  isLoggedIn,
-  storeUserInfo,
-} from "@/services/auth.service";
-import toast from "react-hot-toast";
+import { storeUserInfo } from "@/services/auth.service";
+
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
@@ -34,12 +30,11 @@ const LoginPage = () => {
   const onSubmit: SubmitHandler<FromValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      storeUserInfo({ accessToken: res?.data?.accessToken });
-
-      if (res?.data.accessToken) {
+      console.log(res);
+      if (res?.accessToken) {
         router.push("/profile");
       }
-
+      storeUserInfo({ accessToken: res?.accessToken });
       Swal.fire({
         title: "Login Successfully",
         showClass: {
