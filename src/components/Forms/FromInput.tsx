@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "antd";
-import { type } from "os";
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IInput {
