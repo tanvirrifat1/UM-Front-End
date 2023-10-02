@@ -56,107 +56,109 @@ const CreateAdminPage = () => {
             <p style={{ fontSize: "18px", marginBottom: "10px" }}>
               Admin Information
             </p>
-            <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FromInput
-                  type="text"
-                  name="admin.name.firstName"
-                  size="large"
-                  label="First Name"
-                  placeholder="Name"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FromInput
-                  type="text"
-                  name="admin.name.middleName"
-                  size="large"
-                  label="Middle Name"
-                  placeholder="MiddleName"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FromInput
-                  type="text"
-                  name="admin.name.lastName"
-                  size="large"
-                  label="Last Name"
-                  placeholder="LastName"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FromInput
-                  type="password"
-                  name="password"
-                  size="large"
-                  label="Password"
-                  placeholder="Password"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="admin.gender"
-                  label="Gender"
-                  placeholder="gender"
-                  options={genderOptions}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="admin.managementDepartment"
-                  label="Department"
-                  placeholder="Department"
-                  options={departmentOptions}
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <UploadImage />
-              </Col>
-            </Row>
+            <div>
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FromInput
+                    type="text"
+                    name="admin.name.firstName"
+                    size="large"
+                    label="First Name"
+                    placeholder="Name"
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FromInput
+                    type="text"
+                    name="admin.name.middleName"
+                    size="large"
+                    label="Middle Name"
+                    placeholder="MiddleName"
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FromInput
+                    type="text"
+                    name="admin.name.lastName"
+                    size="large"
+                    label="Last Name"
+                    placeholder="LastName"
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FromInput
+                    type="password"
+                    name="password"
+                    size="large"
+                    label="Password"
+                    placeholder="Password"
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="admin.gender"
+                    label="Gender"
+                    placeholder="gender"
+                    options={genderOptions}
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <FormSelectField
+                    size="large"
+                    name="admin.managementDepartment"
+                    label="Department"
+                    placeholder="Department"
+                    options={departmentOptions}
+                  />
+                </Col>
+                <Col
+                  className="gutter-row"
+                  span={8}
+                  style={{
+                    marginBottom: "10px",
+                  }}
+                >
+                  <UploadImage />
+                </Col>
+              </Row>
+            </div>
           </div>
           {/* Basic Information */}
           <div
