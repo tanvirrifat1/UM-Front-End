@@ -1,9 +1,15 @@
 "use client";
 
-import { departmentOptions, genderOptions } from "@/Constants/global";
+import {
+  bloodGroupOptions,
+  departmentOptions,
+  genderOptions,
+} from "@/Constants/global";
 import Form from "@/components/Forms/Form";
+import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FromInput from "@/components/Forms/FromInput";
 import FormSelectField from "@/components/Forms/FromSelectFields";
+import FormTextArea from "@/components/Forms/FromTextArea";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
 import { Button, Col, Row } from "antd";
@@ -161,7 +167,12 @@ const CreateAdminPage = () => {
               marginBottom: "10px",
             }}
           >
-            <p style={{ fontSize: "18px", marginBottom: "10px" }}>
+            <p
+              style={{
+                fontSize: "18px",
+                marginBottom: "10px",
+              }}
+            >
               Basic Information
             </p>
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
@@ -176,8 +187,7 @@ const CreateAdminPage = () => {
                   type="email"
                   name="admin.email"
                   size="large"
-                  label="Email"
-                  placeholder="Email"
+                  label="Email address"
                 />
               </Col>
               <Col
@@ -191,8 +201,7 @@ const CreateAdminPage = () => {
                   type="text"
                   name="admin.contactNo"
                   size="large"
-                  label="ContactNo"
-                  placeholder="ContactNo"
+                  label="Contact No."
                 />
               </Col>
               <Col
@@ -206,8 +215,35 @@ const CreateAdminPage = () => {
                   type="text"
                   name="admin.emergencyContactNo"
                   size="large"
-                  label="EmergencyContactNo"
-                  placeholder="EmergencyContactNo"
+                  label="Emergency Contact No."
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormDatePicker
+                  name="admin.dateOfBirth"
+                  label="Date of birth"
+                  size="large"
+                />
+              </Col>
+              <Col
+                className="gutter-row"
+                span={8}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormSelectField
+                  size="large"
+                  name="admin.bloodGroup"
+                  options={bloodGroupOptions}
+                  label="Blood group"
+                  placeholder="Select"
                 />
               </Col>
               <Col
@@ -218,57 +254,31 @@ const CreateAdminPage = () => {
                 }}
               >
                 <FromInput
-                  type="password"
-                  name="password"
+                  type="text"
+                  name="admin.designation"
                   size="large"
-                  label="Password"
+                  label="Designation"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="admin.gender"
-                  label="Gender"
-                  placeholder="gender"
-                  options={genderOptions}
+              <Col span={12} style={{ margin: "10px 0" }}>
+                <FormTextArea
+                  name="admin.presentAddress"
+                  label="Present address"
+                  rows={4}
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                span={8}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name="admin.managementDepartment"
-                  label="Department"
-                  placeholder="Department"
-                  options={departmentOptions}
+
+              <Col span={12} style={{ margin: "10px 0" }}>
+                <FormTextArea
+                  name="admin.permanentAddress"
+                  label="Permanent address"
+                  rows={4}
                 />
               </Col>
             </Row>
           </div>
-          <div
-            style={{
-              padding: "15px ",
-            }}
-          >
-            <Button
-              style={{
-                height: "40px",
-                width: "250px",
-              }}
-              htmlType="submit"
-              type="primary"
-            >
+          <div style={{ padding: "18px" }}>
+            <Button style={{ width: "250px" }} htmlType="submit" type="primary">
               Create
             </Button>
           </div>
@@ -277,5 +287,4 @@ const CreateAdminPage = () => {
     </div>
   );
 };
-
 export default CreateAdminPage;
