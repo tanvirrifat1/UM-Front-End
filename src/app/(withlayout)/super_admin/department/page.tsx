@@ -1,3 +1,4 @@
+import ActionBar from "@/components/ui/ActionBar";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { Button } from "antd";
 import Link from "next/link";
@@ -14,10 +15,12 @@ const DepartMent = () => {
           },
         ]}
       />
-      <h1>Department List</h1>
-      <Link href="/super_admin/department/create">
-        <Button type="primary">Create</Button>
-      </Link>
+
+      <ActionBar title="Department List">
+        <Link href="/super_admin/department/create">
+          <Button type="primary">Create</Button>
+        </Link>
+      </ActionBar>
     </div>
   );
 };

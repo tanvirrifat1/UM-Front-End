@@ -1,3 +1,4 @@
+import ActionBar from "@/components/ui/ActionBar";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { Button } from "antd";
 import Link from "next/link";
@@ -14,10 +15,12 @@ const page = () => {
           },
         ]}
       />
-      <h1>this is manage-student</h1>
-      <Link href="/super_admin/manage-faculty/create">
-        <Button type="primary">Create</Button>
-      </Link>
+
+      <ActionBar title="this is manage-student">
+        <Link href="/super_admin/manage-faculty/create">
+          <Button type="primary">Create</Button>
+        </Link>
+      </ActionBar>
     </div>
   );
 };
