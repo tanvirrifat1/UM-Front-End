@@ -3,23 +3,16 @@
 import React, { useState } from "react";
 import { Button, message, Steps, theme } from "antd";
 
-const steps = [
-  {
-    title: "First",
-    content: "First-content",
-  },
-  {
-    title: "Second",
-    content: "Second-content",
-  },
-  {
-    title: "Last",
-    content: "Last-content",
-  },
-];
+interface ISteps {
+  title?: string;
+  content?: React.ReactElement | React.ReactNode;
+}
 
-const StepperForm: React.FC = () => {
-  const { token } = theme.useToken();
+interface IStepsProps {
+  steps: ISteps[];
+}
+
+const StepperForm = ({ steps }: IStepsProps) => {
   const [current, setCurrent] = useState(0);
 
   const next = () => {
@@ -32,20 +25,10 @@ const StepperForm: React.FC = () => {
 
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
-  const contentStyle: React.CSSProperties = {
-    lineHeight: "260px",
-    textAlign: "center",
-    color: token.colorTextTertiary,
-    backgroundColor: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: `1px dashed ${token.colorBorder}`,
-    marginTop: 16,
-  };
-
   return (
     <>
       <Steps current={current} items={items} />
-      <div style={contentStyle}>{steps[current].content}</div>
+      <div>{steps[current].content}</div>
       <div style={{ marginTop: 24 }}>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
