@@ -15,7 +15,7 @@ import UploadImage from "../ui/UploadImage";
 
 const StudentInfo = () => {
   return (
-    <div>
+    <div style={{ marginTop: "10px" }}>
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         <Col
           className="gutter-row"
@@ -121,6 +121,30 @@ const StudentInfo = () => {
             placeholder="academicSemester"
             options={acSemesterOptions}
           />
+        </Col>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
+          <FormSelectField
+            size="large"
+            name="student.gender"
+            label="Gender"
+            placeholder="gender"
+            options={genderOptions}
+          />
+        </Col>
+        <Col
+          className="gutter-row"
+          span={8}
+          style={{
+            marginBottom: "10px",
+          }}
+        >
+          <UploadImage />
         </Col>
       </Row>
     </div>

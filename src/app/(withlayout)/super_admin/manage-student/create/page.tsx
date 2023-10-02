@@ -1,3 +1,5 @@
+"use client";
+
 import StepperForm from "@/components/StepperForm/StepperForm";
 import BasicInfo from "@/components/StudentForms/BasicInfo";
 import GuardianInfo from "@/components/StudentForms/GuardianInfo";
@@ -34,7 +36,7 @@ const CreateStudentPage = () => {
           { label: "manage-student", link: `/${base}/manage-student` },
         ]}
       />
-      <h1>Create Student</h1>
+      <h1 style={{ margin: "10px" }}>Create Student</h1>
       <StepperForm steps={steps} />
     </div>
   );

@@ -29,7 +29,7 @@ const StepperForm = ({ steps }: IStepsProps) => {
   const methods = useForm();
 
   return (
-    <>
+    <div style={{ padding: "10px" }}>
       <Steps current={current} items={items} />
       <FormProvider {...methods}>
         <Form>
@@ -56,7 +56,7 @@ const StepperForm = ({ steps }: IStepsProps) => {
           </div>
         </Form>
       </FormProvider>
-    </>
+    </div>
   );
 };
 
