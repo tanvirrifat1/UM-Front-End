@@ -21,7 +21,7 @@ const ManageStudentPage = () => {
       />
       <h1>this is manage-student</h1>
       <Link href="/super_admin/manage-student/create">
-        <Button style={{ background: "primary" }}>Create student</Button>
+        <Button type="primary">Create student</Button>
       </Link>
     </div>
   );

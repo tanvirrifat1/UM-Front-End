@@ -1,9 +1,23 @@
-import React from "react";
+import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+
+import Link from "next/link";
+import { Button } from "antd";
 
 const AdminPage = () => {
   return (
     <div>
-      <h1>This is admin page</h1>
+      <UMbreadCrumb
+        items={[
+          {
+            label: "super_admin",
+            link: "/super_admin",
+          },
+        ]}
+      />
+
+      <Link href="/super_admin/admin/create">
+        <Button type="primary">Create Admin</Button>
+      </Link>
     </div>
   );
 };
