@@ -1,3 +1,4 @@
+import StepperForm from "@/components/StepperForm/StepperForm";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 
 const CreateStudentPage = () => {
@@ -11,6 +12,7 @@ const CreateStudentPage = () => {
         ]}
       />
       <h1>CreateStudentPage</h1>
+      <StepperForm />
     </div>
   );
 };
