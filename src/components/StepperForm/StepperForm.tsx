@@ -1,8 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button, message, Steps, theme } from "antd";
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { getToLocalStorage, setToLocalStorage } from "@/utils/local-storeage";
+import { Button, message, Steps } from "antd";
+import { useRouter } from "next/navigation";
+
+import { useEffect, useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 
 interface ISteps {
   title?: string;
@@ -11,10 +14,22 @@ interface ISteps {
 
 interface IStepsProps {
   steps: ISteps[];
+  submitHandler: (el: any) => void;
+  navigateLink?: string;
 }
 
-const StepperForm = ({ steps }: IStepsProps) => {
-  const [current, setCurrent] = useState(0);
+const StepperForm = ({ steps, submitHandler, navigateLink }: IStepsProps) => {
+  const router = useRouter();
+
+  const [current, setCurrent] = useState<number>(
+    !!getToLocalStorage("step")
+      ? Number(JSON.parse(getToLocalStorage("step") as string).step)
+      : 0
+  );
+
+  useEffect(() => {
+    setToLocalStorage("step", JSON.stringify({ step: current }));
+  }, [current]);
 
   const next = () => {
     setCurrent(current + 1);
@@ -28,11 +43,23 @@ const StepperForm = ({ steps }: IStepsProps) => {
 
   const methods = useForm();
 
+  const { handleSubmit, reset } = methods;
+
+  const handleStudentOnSubmit = (data: any) => {
+    submitHandler(data);
+    reset();
+    setToLocalStorage("step", JSON.stringify({ step: 0 }));
+
+    if (navigateLink) {
+      router.push(navigateLink);
+    }
+  };
+
   return (
     <div style={{ padding: "10px" }}>
       <Steps current={current} items={items} />
       <FormProvider {...methods}>
-        <Form>
+        <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
           <div>{steps[current].content}</div>
           <div style={{ marginTop: 24 }}>
             {current < steps.length - 1 && (
@@ -43,6 +70,7 @@ const StepperForm = ({ steps }: IStepsProps) => {
             {current === steps.length - 1 && (
               <Button
                 type="primary"
+                htmlType="submit"
                 onClick={() => message.success("Processing complete!")}
               >
                 Done
@@ -54,7 +82,7 @@ const StepperForm = ({ steps }: IStepsProps) => {
               </Button>
             )}
           </div>
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

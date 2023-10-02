@@ -7,7 +7,6 @@ import FormSelectField from "../Forms/FromSelectFields";
 import {
   acDepartmentOptions,
   acSemesterOptions,
-  departmentOptions,
   facultyOptions,
   genderOptions,
 } from "@/Constants/global";
