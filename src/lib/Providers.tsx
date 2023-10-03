@@ -1,5 +1,5 @@
 "use client";
-import { store } from "@/redux/store";
+import { store } from "@/redux/slice/store";
 import { Provider } from "react-redux";
 import StyledComponentsRegistry from "./AntdRegistry";
 
