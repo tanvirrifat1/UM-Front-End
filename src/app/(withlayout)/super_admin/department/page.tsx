@@ -1,4 +1,5 @@
 import ActionBar from "@/components/ui/ActionBar";
+import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { Button } from "antd";
 import Link from "next/link";
@@ -21,6 +22,8 @@ const DepartMent = () => {
           <Button type="primary">Create</Button>
         </Link>
       </ActionBar>
+
+      <UMTable />
     </div>
   );
 };
