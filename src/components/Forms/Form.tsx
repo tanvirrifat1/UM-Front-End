@@ -5,6 +5,7 @@ import { ReactElement, ReactNode } from "react";
 
 type FromConfig = {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 };
 
 type FromProps = {
@@ -12,9 +13,15 @@ type FromProps = {
   submitHandler: SubmitHandler<any>;
 } & FromConfig;
 
-const Form = ({ children, submitHandler, defaultValues }: FromProps) => {
+const Form = ({
+  children,
+  submitHandler,
+  defaultValues,
+  resolver,
+}: FromProps) => {
   const fromConfig: FromConfig = {};
   if (!!defaultValues) fromConfig["defaultValues"] = defaultValues;
+  if (!!resolver) fromConfig["resolver"] = resolver;
   const methods = useForm<FromProps>(fromConfig);
   const { handleSubmit, reset } = methods;
 
