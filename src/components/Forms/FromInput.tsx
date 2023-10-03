@@ -2,7 +2,7 @@
 
 import { getErrorMessageByPropertyName } from "@/utils/schema-validations";
 import { Input } from "antd";
-import { error } from "console";
+
 import { Controller, useFormContext } from "react-hook-form";
 
 interface IInput {
