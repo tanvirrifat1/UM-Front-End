@@ -11,5 +11,6 @@ export const adminSchema = yup.object().shape({
     email: yup.string().required("email is required"),
     designation: yup.string().required("designation is required"),
     dateOfBirth: yup.string().required("dateOfBirth is required"),
+    gender: yup.string().required("gender is required"),
   }),
 });
