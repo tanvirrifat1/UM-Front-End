@@ -1,10 +1,15 @@
 "use client";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -17,16 +22,26 @@ const DepartMent = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   query["limit"] = size;
   query["page"] = page;
 
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
+  query["searchTerm"] = searchTerm;
+
   const { data, isLoading } = useDepartmentsQuery({ ...query });
 
   const departments = data?.departments;
   const meta = data?.meta;
+
+  const resetFilters = () => {
+    setSortBy("");
+    setSortOrder("");
+    setSearchTerm("");
+  };
 
   const columns = [
     {
@@ -74,7 +89,7 @@ const DepartMent = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: "10px" }}>
       <UMbreadCrumb
         items={[
           {
@@ -86,9 +101,30 @@ const DepartMent = () => {
 
       <div style={{ margin: "10px" }}>
         <ActionBar title="Department List">
-          <Link href="/super_admin/department/create">
-            <Button type="primary">Create</Button>
-          </Link>
+          <Input
+            type="text"
+            size="large"
+            placeholder="Search..."
+            style={{
+              width: "20%",
+            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          <div>
+            <Link href="/super_admin/department/create">
+              <Button type="primary">Create</Button>
+            </Link>
+            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+              <Button
+                onClick={resetFilters}
+                type="primary"
+                style={{ margin: "0px 5px" }}
+              >
+                <ReloadOutlined />
+              </Button>
+            )}
+          </div>
         </ActionBar>
       </div>
 

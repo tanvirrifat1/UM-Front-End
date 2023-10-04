@@ -16,7 +16,7 @@ const CreateDepartmentPage = () => {
     try {
       await addDepartment(data);
       message.success("Department added successfully");
-      // router.push("/department");
+      router.push("/super_admin/department");
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);
