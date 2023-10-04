@@ -1,5 +1,5 @@
 "use client";
-
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
@@ -11,61 +11,66 @@ import React, { useState } from "react";
 const DepartMent = () => {
   const query: Record<string, any> = {};
 
-  const [size, setSize] = useState<Number>(10);
-  const [page, setPage] = useState<Number>(1);
+  const [size, setSize] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
+
+  const [sortBy, setSortBy] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
 
-  const { data, isLoading } = useDepartmentsQuery({ ...query });
-  console.log(data, "data");
+  query["sortBy"] = sortBy;
+  query["sortOrder"] = sortOrder;
 
-  const { departments, meta } = data;
+  const { data, isLoading } = useDepartmentsQuery({ ...query });
+
+  const departments = data?.departments;
+  const meta = data?.meta;
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Title",
+      dataIndex: "title",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a: any, b: any) => a.age - b.age,
+      title: "CreatedAt",
+      dataIndex: "createdAt",
+      sorter: true,
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
-          <Button onClick={() => console.log(data)} type="primary" danger>
-            x
-          </Button>
+          <>
+            <Button type="primary" onClick={() => console.log(data)}>
+              <EyeOutlined />
+            </Button>
+            <Button
+              style={{ margin: "0px 5px" }}
+              type="primary"
+              onClick={() => console.log(data)}
+            >
+              <EditOutlined />
+            </Button>
+            <Button type="primary" danger onClick={() => console.log(data)}>
+              <DeleteOutlined />
+            </Button>
+          </>
         );
       },
     },
   ];
 
-  const tableData = [
-    {
-      key: "1",
-      name: "Jhony Deep",
-      age: 32,
-    },
-    {
-      key: "2",
-      name: "JIm Green",
-      age: 42,
-    },
-  ];
-
   const onPaginationChange = (page: any, pageSize: any) => {
-    console.log("page", page);
-    console.log("pageSize", pageSize);
+    setPage(page);
+    setSize(pageSize);
   };
 
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
+    setSortBy(field as string);
+    setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   return (
@@ -79,18 +84,20 @@ const DepartMent = () => {
         ]}
       />
 
-      <ActionBar title="Department List">
-        <Link href="/super_admin/department/create">
-          <Button type="primary">Create</Button>
-        </Link>
-      </ActionBar>
+      <div style={{ margin: "10px" }}>
+        <ActionBar title="Department List">
+          <Link href="/super_admin/department/create">
+            <Button type="primary">Create</Button>
+          </Link>
+        </ActionBar>
+      </div>
 
       <UMTable
         loading={isLoading}
         columns={columns}
-        dataSource={tableData}
-        pageSize={5}
-        totalPages={10}
+        dataSource={departments}
+        pageSize={size}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

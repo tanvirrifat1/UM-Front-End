@@ -6,15 +6,17 @@ import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
 
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 
 const CreateDepartmentPage = () => {
   const [addDepartment] = useAddDepartmentMutation();
-
+  const router = useRouter();
   const onSubmit = async (data: any) => {
     message.loading("Sending....");
     try {
       await addDepartment(data);
       message.success("Department added successfully");
+      // router.push("/department");
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);
