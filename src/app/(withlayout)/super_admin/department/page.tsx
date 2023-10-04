@@ -12,25 +12,30 @@ import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import { Button, Input } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useDebounced } from "@/redux/slice/hooks";
 
 const DepartMent = () => {
   const query: Record<string, any> = {};
 
-  const [size, setSize] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
-
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
-
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
-
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
 
-  query["searchTerm"] = searchTerm;
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
 
   const { data, isLoading } = useDepartmentsQuery({ ...query });
 
