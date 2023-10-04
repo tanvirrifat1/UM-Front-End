@@ -3,11 +3,25 @@
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import { Button } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const DepartMent = () => {
+  const query: Record<string, any> = {};
+
+  const [size, setSize] = useState<Number>(10);
+  const [page, setPage] = useState<Number>(1);
+
+  query["limit"] = size;
+  query["page"] = page;
+
+  const { data, isLoading } = useDepartmentsQuery({ ...query });
+  console.log(data, "data");
+
+  const { departments, meta } = data;
+
   const columns = [
     {
       title: "Name",
@@ -52,8 +66,6 @@ const DepartMent = () => {
 
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
-    console.log(order);
-    console.log(field);
   };
 
   return (
@@ -74,7 +86,7 @@ const DepartMent = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
         dataSource={tableData}
         pageSize={5}

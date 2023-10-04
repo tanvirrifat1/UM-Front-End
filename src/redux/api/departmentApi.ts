@@ -1,18 +1,34 @@
+import { IDepartment, IMeta } from "@/types";
 import { tagTypes } from "../slice/tag-types";
 import { baseApi } from "./baseApi";
 
-const DEPARTMENT_API = "/management-departments'";
+const DEPARTMENT_URL = "/management-departments";
 
 export const departmentApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    departments: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: DEPARTMENT_URL,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: IDepartment, meta: IMeta) => {
+        return {
+          departments: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.department],
+    }),
+
     addDepartment: build.mutation({
       query: (data) => ({
-        url: DEPARTMENT_API,
+        url: DEPARTMENT_URL,
         method: "POST",
-        data: data,
+        data,
       }),
       invalidatesTags: [tagTypes.department],
     }),
   }),
 });
-export const { useAddDepartmentMutation } = departmentApi;
+export const { useAddDepartmentMutation, useDepartmentsQuery } = departmentApi;
