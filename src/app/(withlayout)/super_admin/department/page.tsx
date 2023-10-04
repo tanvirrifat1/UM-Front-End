@@ -10,9 +10,10 @@ import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import { Button, Input } from "antd";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useDebounced } from "@/redux/slice/hooks";
+import dayjs from "dayjs";
+import Link from "next/link";
 
 const DepartMent = () => {
   const query: Record<string, any> = {};
@@ -57,22 +58,24 @@ const DepartMent = () => {
       title: "CreatedAt",
       dataIndex: "createdAt",
       sorter: true,
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D,  YYYY hh:mm A");
+      },
     },
     {
       title: "Action",
       render: function (data: any) {
         return (
           <>
-            <Button type="primary" onClick={() => console.log(data)}>
-              <EyeOutlined />
-            </Button>
-            <Button
-              style={{ margin: "0px 5px" }}
-              type="primary"
-              onClick={() => console.log(data)}
-            >
-              <EditOutlined />
-            </Button>
+            <Link href={`/super_admin/department/edit/${data?.id}`}>
+              <Button
+                style={{ margin: "0px 5px" }}
+                type="primary"
+                onClick={() => console.log(data)}
+              >
+                <EditOutlined />
+              </Button>
+            </Link>
             <Button type="primary" danger onClick={() => console.log(data)}>
               <DeleteOutlined />
             </Button>
@@ -112,6 +115,7 @@ const DepartMent = () => {
             placeholder="Search..."
             style={{
               width: "20%",
+              margin: "5px",
             }}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
