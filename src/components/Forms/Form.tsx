@@ -20,8 +20,10 @@ const Form = ({
   resolver,
 }: FromProps) => {
   const fromConfig: FromConfig = {};
+
   if (!!defaultValues) fromConfig["defaultValues"] = defaultValues;
   if (!!resolver) fromConfig["resolver"] = resolver;
+
   const methods = useForm<FromProps>(fromConfig);
   const { handleSubmit, reset } = methods;
 

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  bloodGroupOptions,
-  departmentOptions,
-  genderOptions,
-} from "@/Constants/global";
+import { bloodGroupOptions, genderOptions } from "@/Constants/global";
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FromInput from "@/components/Forms/FromInput";
@@ -12,13 +8,26 @@ import FormSelectField from "@/components/Forms/FromSelectFields";
 import FormTextArea from "@/components/Forms/FromTextArea";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
+import { useDepartmentsQuery } from "@/redux/api/departmentApi";
 import { adminSchema } from "@/schemas/admin";
+import { IDepartment } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 import React from "react";
 const style: React.CSSProperties = { background: "#0092ff", padding: "8px 0" };
 
 const CreateAdminPage = () => {
+  const { data, isLoading } = useDepartmentsQuery({ limit: 100, page: 1 });
+
+  const departments: any = data?.departments;
+
+  const departmentOptions = departments?.map((department: any) => {
+    return {
+      label: department?.title,
+      value: department?.id,
+    };
+  });
+
   const onSubmit = async (data: any) => {
     try {
       console.log(data);

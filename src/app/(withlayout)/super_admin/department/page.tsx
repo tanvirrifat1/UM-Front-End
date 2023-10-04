@@ -8,14 +8,18 @@ import {
 import ActionBar from "@/components/ui/ActionBar";
 import UMTable from "@/components/ui/UMTable";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
-import { useDepartmentsQuery } from "@/redux/api/departmentApi";
-import { Button, Input } from "antd";
+import {
+  useDeleteDepartmentMutation,
+  useDepartmentsQuery,
+} from "@/redux/api/departmentApi";
+import { Button, Input, message } from "antd";
 import React, { useState } from "react";
 import { useDebounced } from "@/redux/slice/hooks";
 import dayjs from "dayjs";
 import Link from "next/link";
+import ModalPage from "@/components/ui/Modal";
 
-const DepartMent = () => {
+const DepartMent = ({ params }: any) => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -39,6 +43,19 @@ const DepartMent = () => {
   }
 
   const { data, isLoading } = useDepartmentsQuery({ ...query });
+
+  const [deleteDepartment] = useDeleteDepartmentMutation();
+
+  const onsubmit = async (id: string) => {
+    message.loading("Deleting...");
+
+    try {
+      await deleteDepartment(id);
+      message.success("Department deleted successfully");
+    } catch (error: any) {
+      message.error(error.message);
+    }
+  };
 
   const departments = data?.departments;
   const meta = data?.meta;
@@ -76,7 +93,7 @@ const DepartMent = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button type="primary" danger onClick={() => console.log(data)}>
+            <Button type="primary" danger onClick={() => onsubmit(data?.id)}>
               <DeleteOutlined />
             </Button>
           </>

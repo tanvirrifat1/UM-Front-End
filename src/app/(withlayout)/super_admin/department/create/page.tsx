@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 const CreateDepartmentPage = () => {
   const [addDepartment] = useAddDepartmentMutation();
+
   const router = useRouter();
   const onSubmit = async (data: any) => {
     message.loading("Sending....");

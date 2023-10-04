@@ -8,6 +8,7 @@ import {
   useUpdateDepartmentMutation,
 } from "@/redux/api/departmentApi";
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 
 type IDProps = {
   params: any;
@@ -16,16 +17,21 @@ type IDProps = {
 const EditDepartment = ({ params }: IDProps) => {
   const { id } = params;
 
+  const router = useRouter();
+
   const { data, isLoading } = useSingleDepartmentQuery(id);
 
   const [updateDepartment] = useUpdateDepartmentMutation();
 
-  const onsubmit = async (values: { data: any }) => {
+  const onsubmit = async (values: { title: any }) => {
     message.loading("Updating...");
     try {
+      await updateDepartment({ id, body: values });
+
+      router.push(`/super_admin/department`);
+
       message.success("Department updated successfully");
     } catch (error: any) {
-      console.error(error.message);
       message.error(error.message);
     }
   };
