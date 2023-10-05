@@ -24,7 +24,7 @@ export const adminApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformErrorResponse: (response: IAdmin[], meta: IMeta) => {
+      transformResponse: (response: IAdmin[], meta: IMeta) => {
         return {
           admins: response,
           meta,
@@ -34,3 +34,5 @@ export const adminApi = baseApi.injectEndpoints({
     }),
   }),
 });
+
+export const { useAdminsQuery, useAddAdminWithFormDataMutation } = adminApi;
