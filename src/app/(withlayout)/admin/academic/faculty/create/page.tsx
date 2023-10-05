@@ -3,21 +3,24 @@
 import Form from "@/components/Forms/Form";
 import FromInput from "@/components/Forms/FromInput";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
-import { useAddDepartmentMutation } from "@/redux/api/departmentApi";
+import { useAddAcademicFacultyMutation } from "@/redux/api/academic/facultyApi";
 
 import { Button, Col, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 
 const CreateFacultyPage = () => {
-  const [addDepartment] = useAddDepartmentMutation();
+  const [addAcademicFaculty] = useAddAcademicFacultyMutation();
 
   const router = useRouter();
   const onSubmit = async (data: any) => {
     message.loading("Sending....");
     try {
-      await addDepartment(data);
-      message.success("Faculty added successfully");
-      router.push("/super_admin/department");
+      const res = await addAcademicFaculty(data);
+      if (!!res) {
+        message.success("Faculty added successfully");
+      }
+      console.log(res);
+      // router.push("/admin/academic/faculty");
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);

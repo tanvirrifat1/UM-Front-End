@@ -12,6 +12,11 @@ import { useState } from "react";
 import ActionBar from "@/components/ui/ActionBar";
 
 import dayjs from "dayjs";
+import {
+  useAcademicFacultiesQuery,
+  useDeleteAcademicFacultyMutation,
+} from "@/redux/api/academic/facultyApi";
+import { useDebounced } from "@/redux/slice/hooks";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 
 const ACFacultyPage = () => {
@@ -22,21 +27,40 @@ const ACFacultyPage = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [deleteAcademicFaculty] = useDeleteAcademicFacultyMutation();
 
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  // query["searchTerm"] = searchTerm;
 
-  const deleteHandler = async (id: string) => {
-    message.loading("Deleting.....");
-    try {
-      console.log(id);
-    } catch (err: any) {
-      //   console.error(err.message);
-      message.error(err.message);
-    }
-  };
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+  const { data, isLoading } = useAcademicFacultiesQuery({ ...query });
+
+  const academicFaculties = data?.academicFaculties;
+  const meta = data?.meta;
+
+  // const deleteHandler = async (id: string) => {
+  //   message.loading("Deleting.....");
+  //   try {
+  //     //   console.log(data);
+  //     const res = await deleteAcademicFaculty(id);
+  //     if (res) {
+  //       message.success("Faculty Deleted successfully");
+  //     }
+  //   } catch (err: any) {
+  //     //   console.error(err.message);
+  //     message.error(err.message);
+  //   }
+  // };
 
   const columns = [
     {
@@ -67,11 +91,7 @@ const ACFacultyPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button
-              onClick={() => deleteHandler(data?.id)}
-              type="primary"
-              danger
-            >
+            <Button onClick={() => console.log(data?.id)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
@@ -138,11 +158,11 @@ const ACFacultyPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={""}
+        dataSource={academicFaculties}
         pageSize={size}
-        totalPages={10}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
