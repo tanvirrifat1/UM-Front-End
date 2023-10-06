@@ -39,6 +39,7 @@ const CreateAdminPage = () => {
     const file = obj["file"];
     delete obj["file"];
     const data = JSON.stringify(obj);
+    console.log(data, "data");
     const formData = new FormData();
     formData.append("file", file as Blob);
     formData.append("data", data);
@@ -77,7 +78,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
 
       <div>
-        <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
