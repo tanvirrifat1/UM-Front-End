@@ -1,6 +1,6 @@
 "use client";
 
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, message } from "antd";
 import React from "react";
 import img from "../../assets/loginImage/Login-amico.png";
 import Image from "next/image";
@@ -43,6 +43,7 @@ const LoginPage = () => {
         },
       });
     } catch (error) {
+      message.error("Password is incorrect");
       console.error(error);
     }
   };
