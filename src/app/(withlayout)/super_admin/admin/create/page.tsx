@@ -34,27 +34,27 @@ const CreateAdminPage = () => {
       };
     });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (values: any) => {
+    const obj = { ...values };
+    const file = obj["file"];
+    delete obj["file"];
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("Creating...");
     try {
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+      await addAdminWithFormData(formData);
+      console.log(addAdminWithFormData(formData));
+      message.success("Admin created successfully!");
+    } catch (err: any) {
+      console.error(err.message);
     }
   };
 
   // const onSubmit = async (values: any) => {
-  //   const obj = { ...values };
-  //   const file = obj["file"];
-  //   delete obj["file"];
-  //   const data = JSON.stringify(obj);
-  //   const formData = new FormData();
-  //   formData.append("file", file as Blob);
-  //   formData.append("data", data);
-  //   message.loading("Creating...");
   //   try {
-  //     await addAdminWithFormData(formData);
-  //     console.log(addAdminWithFormData(formData));
-  //     message.success("Admin created successfully!");
+  //     console.log(values);
   //   } catch (err: any) {
   //     console.error(err.message);
   //   }

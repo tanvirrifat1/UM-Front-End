@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 
 import UMTable from "@/components/ui/UMTable";
-import { useAdminsQuery } from "@/redux/api/adminApi";
+import { useAdminsQuery, useDeleteAdminMutation } from "@/redux/api/adminApi";
 import { IDepartment } from "@/types";
 import dayjs from "dayjs";
 import { useDebounced } from "@/redux/slice/hooks";
@@ -42,6 +42,22 @@ const AdminPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   const { data, isLoading } = useAdminsQuery({ ...query });
+
+  const [deleteAdmin] = useDeleteAdminMutation();
+
+  const deleteHandler = async (id: string) => {
+    message.loading("Deleting.....");
+    try {
+      console.log(data);
+      const res = await deleteAdmin(id);
+      if (!!res) {
+        message.success("Admin Deleted successfully");
+      }
+    } catch (err: any) {
+      //   console.error(err.message);
+      message.error(err.message);
+    }
+  };
 
   const admins = data?.admins;
   const meta = data?.meta;
@@ -109,7 +125,7 @@ const AdminPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data)} type="primary" danger>
+            <Button onClick={() => deleteHandler(data)} type="primary" danger>
               <DeleteOutlined />
             </Button>
           </>
