@@ -48,7 +48,7 @@ const AdminPage = () => {
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      console.log(data);
+      console.log(id);
       const res = await deleteAdmin(id);
       if (!!res) {
         message.success("Admin Deleted successfully");
@@ -107,6 +107,7 @@ const AdminPage = () => {
       title: "Action",
       dataIndex: "id",
       render: function (data: any) {
+        console.log(data, "data");
         return (
           <>
             <Link href={`/super_admin/admin/details/${data.id}`}>

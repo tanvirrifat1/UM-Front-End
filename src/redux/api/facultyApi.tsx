@@ -25,7 +25,7 @@ export const facultyApi = baseApi.injectEndpoints({
 
     addFacultyFormData: build.mutation({
       query: (data) => ({
-        url: "users/create-faculty",
+        url: "/users/create-faculty",
         method: "POST",
         data,
         contentType: "multipart/form-data",
@@ -53,6 +53,7 @@ export const facultyApi = baseApi.injectEndpoints({
         url: `${BASE_FACULTY_API}/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [tagTypes.faculty],
     }),
   }),
 });

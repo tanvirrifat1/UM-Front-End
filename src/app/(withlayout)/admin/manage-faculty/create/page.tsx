@@ -1,6 +1,7 @@
 "use client";
 
 import { bloodGroupOptions, genderOptions } from "@/Constants/global";
+import ACDepartmentField from "@/components/Forms/ACDepartmentField";
 import ACFacultyField from "@/components/Forms/ACFacultyField";
 import Form from "@/components/Forms/Form";
 import FormDatePicker from "@/components/Forms/FormDatePicker";
@@ -8,15 +9,28 @@ import FromInput from "@/components/Forms/FromInput";
 import FormSelectField from "@/components/Forms/FromSelectFields";
 import FormTextArea from "@/components/Forms/FromTextArea";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
-
 import UploadImage from "@/components/ui/UploadImage";
+import { useAddFacultyFormDataMutation } from "@/redux/api/facultyApi";
 
 import { Button, Col, Row, message } from "antd";
 
 const CreateFacultyPage = () => {
+  const [addFacultyFormData] = useAddFacultyFormDataMutation();
+
   const adminOnSubmit = async (values: any) => {
+    const obj = { ...values };
+    const file = obj["file"];
+    delete obj["file"];
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("Creating...");
     try {
-      console.log(values);
+      const res = await addFacultyFormData(formData);
+      if (!!res) {
+        message.success("Faculty created successfully!");
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -94,10 +108,10 @@ const CreateFacultyPage = () => {
               />
             </Col>
             <Col span={8} style={{ margin: "10px 0" }}>
-              {/* <ACDepartmentField
+              <ACDepartmentField
                 name="faculty.academicDepartment"
                 label="Academic Department"
-              /> */}
+              />
             </Col>
 
             <Col span={8} style={{ margin: "10px 0" }}>

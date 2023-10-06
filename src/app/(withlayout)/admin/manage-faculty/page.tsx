@@ -1,7 +1,7 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
 
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import {
   DeleteOutlined,
@@ -16,7 +16,10 @@ import { IDepartment } from "@/types";
 import dayjs from "dayjs";
 import { useDebounced } from "@/redux/slice/hooks";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
-import { useFacultiesQuery } from "@/redux/api/facultyApi";
+import {
+  useDeleteFacultyMutation,
+  useFacultiesQuery,
+} from "@/redux/api/facultyApi";
 
 const FacultyPage = () => {
   const query: Record<string, any> = {};
@@ -36,7 +39,7 @@ const FacultyPage = () => {
 
   const faculties = data?.faculties;
   const meta = data?.meta;
-  console.log(faculties);
+  console.log(data);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -46,6 +49,19 @@ const FacultyPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+
+  const [deleteFaculty] = useDeleteFacultyMutation();
+
+  const deleteFacultyFromData = async (id: string) => {
+    try {
+      const res = await deleteFaculty(id);
+      if (res) {
+        message.success("Deleting successfully");
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
 
   const columns = [
     {
@@ -109,7 +125,11 @@ const FacultyPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data)} type="primary" danger>
+            <Button
+              onClick={() => deleteFacultyFromData(data)}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
