@@ -16,6 +16,7 @@ import { IDepartment } from "@/types";
 import dayjs from "dayjs";
 import { useDebounced } from "@/redux/slice/hooks";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import { useFacultiesQuery } from "@/redux/api/facultyApi";
 
 const FacultyPage = () => {
   const query: Record<string, any> = {};
@@ -30,6 +31,12 @@ const FacultyPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+
+  const { data, isLoading } = useFacultiesQuery({ ...query });
+
+  const faculties = data?.faculties;
+  const meta = data?.meta;
+  console.log(faculties);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -163,11 +170,11 @@ const FacultyPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={""}
+        dataSource={data}
         pageSize={size}
-        totalPages={10}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

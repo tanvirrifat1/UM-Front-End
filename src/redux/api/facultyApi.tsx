@@ -60,7 +60,7 @@ export const facultyApi = baseApi.injectEndpoints({
 export const {
   useAddFacultyFormDataMutation, //create
   useDeleteFacultyMutation, // delete
-  useFacultiesQuery, //get single
+  useFacultiesQuery, //get all
   useUpdateFacultyMutation, //update
-  useFacultyQuery, // get all
+  useFacultyQuery, // get single
 } = facultyApi;
