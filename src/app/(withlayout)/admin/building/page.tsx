@@ -14,10 +14,14 @@ import ActionBar from "@/components/ui/ActionBar";
 import dayjs from "dayjs";
 import { useDebounced } from "@/redux/slice/hooks";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import {
+  useBuildingsQuery,
+  useDeleteBuildingMutation,
+} from "@/redux/api/buildingApi";
 
 const ManageBuildingPage = () => {
   const query: Record<string, any> = {};
-
+  const [deleteBuilding] = useDeleteBuildingMutation();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
@@ -39,12 +43,19 @@ const ManageBuildingPage = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
+  const { data, isLoading } = useBuildingsQuery({ ...query });
+
+  const buildings = data?.buildings;
+  const meta = data?.meta;
+
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
       console.log(id);
-
-      message.success("Building Deleted successfully");
+      const res = await deleteBuilding(id);
+      if (res) {
+        message.success("Building Deleted successfully");
+      }
     } catch (err: any) {
       //   console.error(err.message);
       message.error(err.message);
@@ -80,7 +91,11 @@ const ManageBuildingPage = () => {
                 <EditOutlined />
               </Button>
             </Link>
-            <Button onClick={() => console.log(data?.id)} type="primary" danger>
+            <Button
+              onClick={() => deleteHandler(data?.id)}
+              type="primary"
+              danger
+            >
               <DeleteOutlined />
             </Button>
           </>
@@ -147,11 +162,11 @@ const ManageBuildingPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={""}
+        dataSource={buildings}
         pageSize={size}
-        totalPages={10}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}

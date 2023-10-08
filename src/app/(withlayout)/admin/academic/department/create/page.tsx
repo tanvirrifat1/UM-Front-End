@@ -52,7 +52,7 @@ const CreateACDepartmentPage = () => {
         ]}
       />
       <h1>Create Academic Department</h1>
-      <Form submitHandler={onSubmit}>
+      <Form persistKey="" submitHandler={onSubmit}>
         <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
           <Col span={8} style={{ margin: "10px 0" }}>
             <FromInput name="title" label="Academic Department Title" />

@@ -2,14 +2,23 @@
 import Form from "@/components/Forms/Form";
 import FromInput from "@/components/Forms/FromInput";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import { useAddBuildingMutation } from "@/redux/api/buildingApi";
 
 import { Button, Col, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 
 const CreateBuildPage = () => {
+  const [addBuilding] = useAddBuildingMutation();
+  const router = useRouter();
   const onSubmit = async (data: any) => {
     message.loading("Creating.....");
     try {
-      console.log(data);
+      const res = await addBuilding(data).unwrap();
+      if (!!res.id) {
+        message.success("Building creating....");
+      }
+      console.log(res);
+      router.push("/admin/building");
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);
