@@ -32,14 +32,6 @@ const CreateStudentPage = () => {
     },
   ];
 
-  //   const handleStudentSubmit = (values: any) => {
-  //     try {
-  //       console.log(values);
-  //     } catch (error: any) {
-  //       console.error(error.message);
-  //     }
-  //   };
-
   const handleStudentSubmit = async (values: any) => {
     const obj = { ...values };
     const file = obj["file"];
@@ -51,6 +43,7 @@ const CreateStudentPage = () => {
     message.loading("Creating...");
     try {
       const res = await addStudentWithFormData(formData);
+      console.log(res);
       if (!!res) {
         message.success("Student created successfully!");
       }

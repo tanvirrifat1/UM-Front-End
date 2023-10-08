@@ -32,7 +32,7 @@ const StepperForm = ({
       : 0
   );
 
-  const [savedValues] = useState(
+  const [savedValues, setSavedValues] = useState(
     !!getToLocalStorage(persistKey)
       ? JSON.parse(getToLocalStorage(persistKey) as string)
       : ""
