@@ -1,20 +1,26 @@
 "use client";
-
 import { Col, Row } from "antd";
-import React from "react";
-import FromInput from "../Forms/FromInput";
-import FormSelectField from "../Forms/FromSelectFields";
-import {
-  acDepartmentOptions,
-  acSemesterOptions,
-  facultyOptions,
-  genderOptions,
-} from "@/Constants/global";
+
 import UploadImage from "../ui/UploadImage";
+
+import ACDepartmentField from "../Forms/ACDepartmentField";
+import ACFacultyField from "../Forms/ACFacultyField";
+import FromInput from "../Forms/FromInput";
+import ACSemesterField from "../Forms/ACSemesterField";
+import FormSelectField from "../Forms/FromSelectFields";
+import { genderOptions } from "@/Constants/global";
 
 const StudentInfo = () => {
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div
+      style={{
+        border: "1px solid #d9d9d9",
+        borderRadius: "5px",
+        padding: "15px",
+        marginBottom: "10px",
+        marginTop: "10px",
+      }}
+    >
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
         <Col
           className="gutter-row"
@@ -28,7 +34,6 @@ const StudentInfo = () => {
             name="student.name.firstName"
             size="large"
             label="First Name"
-            placeholder="Name"
           />
         </Col>
         <Col
@@ -43,7 +48,6 @@ const StudentInfo = () => {
             name="student.name.middleName"
             size="large"
             label="Middle Name"
-            placeholder="MiddleName"
           />
         </Col>
         <Col
@@ -58,7 +62,6 @@ const StudentInfo = () => {
             name="student.name.lastName"
             size="large"
             label="Last Name"
-            placeholder="LastName"
           />
         </Col>
         <Col
@@ -70,10 +73,9 @@ const StudentInfo = () => {
         >
           <FromInput
             type="password"
-            name="student.password"
+            name="password"
             size="large"
             label="Password"
-            placeholder="Password"
           />
         </Col>
         <Col
@@ -83,12 +85,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <ACDepartmentField
             name="student.academicDepartment"
-            label="AcademicDepartment"
-            placeholder="academicDepartment"
-            options={acDepartmentOptions}
+            label="Academic Department"
           />
         </Col>
         <Col
@@ -98,12 +97,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <ACFacultyField
             name="student.academicFaculty"
-            label="AcademicFaculty"
-            placeholder="academicFaculty"
-            options={facultyOptions}
+            label="Academic Faculty"
           />
         </Col>
         <Col
@@ -113,12 +109,9 @@ const StudentInfo = () => {
             marginBottom: "10px",
           }}
         >
-          <FormSelectField
-            size="large"
+          <ACSemesterField
             name="student.academicSemester"
-            label="AcademicSemester"
-            placeholder="academicSemester"
-            options={acSemesterOptions}
+            label="Academic Semester"
           />
         </Col>
         <Col
@@ -131,9 +124,9 @@ const StudentInfo = () => {
           <FormSelectField
             size="large"
             name="student.gender"
-            label="Gender"
-            placeholder="gender"
             options={genderOptions}
+            label="Gender"
+            placeholder="Select"
           />
         </Col>
         <Col

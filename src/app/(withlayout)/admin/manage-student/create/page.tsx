@@ -6,10 +6,13 @@ import StudentBasicInfo from "@/components/StudentForms/StudentBasicInfo";
 
 import StudentInfo from "@/components/StudentForms/StudentInfo";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import { useAddStudentWithFormDataMutation } from "@/redux/api/studentApi";
 
 import { message } from "antd";
 
 const CreateStudentPage = () => {
+  const [addStudentWithFormData] = useAddStudentWithFormDataMutation();
+
   const steps = [
     {
       title: "Student Information",
@@ -29,32 +32,32 @@ const CreateStudentPage = () => {
     },
   ];
 
-  const handleStudentSubmit = (values: any) => {
-    try {
-      console.log(values);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
-
-  //   const handleStudentSubmit = async (values: any) => {
-  //     const obj = { ...values };
-  //     const file = obj["file"];
-  //     delete obj["file"];
-  //     const data = JSON.stringify(obj);
-  //     const formData = new FormData();
-  //     formData.append("file", file as Blob);
-  //     formData.append("data", data);
-  //     message.loading("Creating...");
+  //   const handleStudentSubmit = (values: any) => {
   //     try {
-  //       const res = await addStudentWithFormData(formData);
-  //       if (!!res) {
-  //         message.success("Student created successfully!");
-  //       }
-  //     } catch (err: any) {
-  //       console.error(err.message);
+  //       console.log(values);
+  //     } catch (error: any) {
+  //       console.error(error.message);
   //     }
   //   };
+
+  const handleStudentSubmit = async (values: any) => {
+    const obj = { ...values };
+    const file = obj["file"];
+    delete obj["file"];
+    const data = JSON.stringify(obj);
+    const formData = new FormData();
+    formData.append("file", file as Blob);
+    formData.append("data", data);
+    message.loading("Creating...");
+    try {
+      const res = await addStudentWithFormData(formData);
+      if (!!res) {
+        message.success("Student created successfully!");
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
 
   const base = "admin";
   return (
@@ -67,7 +70,7 @@ const CreateStudentPage = () => {
       />
       <h1 style={{ margin: "10px 0px" }}>Create Student</h1>
       <StepperForm
-        // persistKey="student-create-form"
+        persistKey="student-create-form"
         submitHandler={(value) => {
           handleStudentSubmit(value);
         }}

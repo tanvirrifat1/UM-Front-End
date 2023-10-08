@@ -1,7 +1,8 @@
 "use client";
 
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { ReactElement, ReactNode, useEffect } from "react";
+import { ReactElement, ReactNode, useEffect, useState } from "react";
+import { getToLocalStorage, setToLocalStorage } from "@/utils/local-storeage";
 
 type FromConfig = {
   defaultValues?: Record<string, any>;
@@ -11,6 +12,7 @@ type FromConfig = {
 type FromProps = {
   children?: ReactElement | ReactNode;
   submitHandler: SubmitHandler<any>;
+  persistKey: string;
 } & FromConfig;
 
 const Form = ({
@@ -18,19 +20,37 @@ const Form = ({
   submitHandler,
   defaultValues,
   resolver,
+  persistKey,
 }: FromProps) => {
   const fromConfig: FromConfig = {};
 
   if (!!defaultValues) fromConfig["defaultValues"] = defaultValues;
+
   if (!!resolver) fromConfig["resolver"] = resolver;
 
-  const methods = useForm<FromProps>(fromConfig);
+  const [savedValues] = useState(
+    !!getToLocalStorage(persistKey)
+      ? JSON.parse(getToLocalStorage(persistKey) as string)
+      : ""
+  );
+
+  const methods = useForm<FromProps>({
+    ...fromConfig,
+    defaultValues: savedValues,
+  });
+
   const { handleSubmit, reset } = methods;
 
   const onSubmit = (data: any) => {
     submitHandler(data);
     reset();
   };
+
+  const watch = methods.watch();
+
+  useEffect(() => {
+    setToLocalStorage(persistKey, JSON.stringify(watch));
+  }, [persistKey, watch, methods]);
 
   useEffect(() => {
     reset(defaultValues);

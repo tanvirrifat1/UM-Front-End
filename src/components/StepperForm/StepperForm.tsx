@@ -3,7 +3,6 @@
 import { getToLocalStorage, setToLocalStorage } from "@/utils/local-storeage";
 import { Button, message, Steps } from "antd";
 import { useRouter } from "next/navigation";
-
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -14,17 +13,29 @@ interface ISteps {
 
 interface IStepsProps {
   steps: ISteps[];
+  persistKey: string;
   submitHandler: (el: any) => void;
   navigateLink?: string;
 }
 
-const StepperForm = ({ steps, submitHandler, navigateLink }: IStepsProps) => {
+const StepperForm = ({
+  steps,
+  submitHandler,
+  navigateLink,
+  persistKey,
+}: IStepsProps) => {
   const router = useRouter();
 
   const [current, setCurrent] = useState<number>(
     !!getToLocalStorage("step")
       ? Number(JSON.parse(getToLocalStorage("step") as string).step)
       : 0
+  );
+
+  const [savedValues] = useState(
+    !!getToLocalStorage(persistKey)
+      ? JSON.parse(getToLocalStorage(persistKey) as string)
+      : ""
   );
 
   useEffect(() => {
@@ -41,7 +52,12 @@ const StepperForm = ({ steps, submitHandler, navigateLink }: IStepsProps) => {
 
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
-  const methods = useForm();
+  const methods = useForm({ defaultValues: savedValues });
+  const watch = methods.watch();
+
+  useEffect(() => {
+    setToLocalStorage(persistKey, JSON.stringify(watch));
+  }, [watch, persistKey, methods]);
 
   const { handleSubmit, reset } = methods;
 
@@ -49,14 +65,12 @@ const StepperForm = ({ steps, submitHandler, navigateLink }: IStepsProps) => {
     submitHandler(data);
     reset();
     setToLocalStorage("step", JSON.stringify({ step: 0 }));
-
-    if (navigateLink) {
-      router.push(navigateLink);
-    }
+    setToLocalStorage(persistKey, JSON.stringify({}));
+    navigateLink && router.push(navigateLink);
   };
 
   return (
-    <div style={{ padding: "10px" }}>
+    <>
       <Steps current={current} items={items} />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(handleStudentOnSubmit)}>
@@ -84,7 +98,7 @@ const StepperForm = ({ steps, submitHandler, navigateLink }: IStepsProps) => {
           </div>
         </form>
       </FormProvider>
-    </div>
+    </>
   );
 };
 

@@ -39,7 +39,7 @@ const FacultyPage = () => {
 
   const faculties = data?.faculties;
   const meta = data?.meta;
-  console.log(data);
+  console.log(faculties);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,

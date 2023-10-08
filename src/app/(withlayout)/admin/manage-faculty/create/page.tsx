@@ -46,7 +46,7 @@ const CreateFacultyPage = () => {
         ]}
       />
       <h1>Create Faculty</h1>
-      <Form submitHandler={adminOnSubmit}>
+      <Form persistKey="create-faculty-form" submitHandler={adminOnSubmit}>
         {/* faculty information */}
         <div
           style={{

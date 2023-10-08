@@ -12,9 +12,10 @@ import {
 import { useState } from "react";
 
 import UMTable from "@/components/ui/UMTable";
-import { IDepartment } from "@/types";
+
 import dayjs from "dayjs";
-import { useFacultiesQuery } from "@/redux/api/facultyApi";
+
+import { useStudentsQuery } from "@/redux/api/studentApi";
 import { useDebounced } from "@/redux/slice/hooks";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 
@@ -40,6 +41,11 @@ const StudentPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+  const { data, isLoading } = useStudentsQuery({ ...query });
+
+  const students = data?.students;
+  const meta = data?.meta;
+  console.log(students);
 
   const columns = [
     {
@@ -158,11 +164,11 @@ const StudentPage = () => {
       </ActionBar>
 
       <UMTable
-        loading={false}
+        loading={isLoading}
         columns={columns}
-        dataSource={""}
+        dataSource={students}
         pageSize={size}
-        totalPages={10}
+        totalPages={meta?.total}
         showSizeChanger={true}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
