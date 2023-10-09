@@ -1,9 +1,6 @@
-import { type } from "os";
-
 export interface IMeta {
   limit: number;
   page: number;
-  size?: number;
   total: number;
 }
 
@@ -23,12 +20,13 @@ export type IGenericErrorMessage = {
   message: string;
 };
 
-export type IDepartment = {
+export interface IDepartment {
   id: string;
   title: string;
   createdAt: string;
   updatedAt: string;
-};
+  __v: number;
+}
 
 export interface Name {
   firstName: string;
@@ -177,4 +175,112 @@ export interface IAcademicCoreSemester {
   startMonth: string;
   endMonth: string;
   createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+}
+export interface ISemesterRegistration {
+  id: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+  maxCredit: number;
+  minCredit: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  academicSemesterId: string;
+  academicSemester?: IAcademicCoreSemester;
+}
+
+export interface IAcademicCoreDepartment {
+  id: string;
+  syncId?: null;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  academicFacultyId: string;
+}
+
+export interface IOfferedCourse {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  courseId: string;
+  semesterRegistrationId: string;
+  academicDepartmentId: string;
+  semesterRegistration: ISemesterRegistration;
+  course: ICourse;
+  academicDepartment: IAcademicCoreDepartment;
+}
+
+export interface IAcademicCoreFaculty {
+  id: string;
+  facultyId: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  profileImage: string;
+  email: string;
+  contactNo: string;
+  gender: string;
+  bloodGroup: string;
+  designation: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  academicDepartmentId: string;
+  academicFacultyId: string;
+}
+
+export interface IOfferedCourseSchedule {
+  id: string;
+  dayOfWeek: string;
+  startTime: string;
+  endTime: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  offeredCourseSectionId: string;
+  roomId: string;
+  facultyId: string;
+  offeredCourseSection: IOfferedCourseSection;
+  faculty: IAcademicCoreFaculty;
+  room: IRoom;
+}
+
+export interface IOfferedCourseSection {
+  id: string;
+  title: string;
+  maxCapacity: number;
+  currentlyEnrolledStudent: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  offeredCourseId: string;
+  offeredCourse: IOfferedCourse;
+  offeredCourseClassSchedules?: IOfferedCourseSchedule[] | null;
+  isTaken?: boolean;
+}
+
+export interface ICoreFaculty {
+  id: string;
+  facultyId: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  profileImage: string;
+  email: string;
+  contactNo: string;
+  gender: string;
+  bloodGroup: string;
+  designation: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null;
+  academicDepartmentId: string;
+  academicFacultyId: string;
+  academicFaculty: IAcademicCoreFaculty;
+  academicDepartment: IAcademicCoreDepartment;
 }

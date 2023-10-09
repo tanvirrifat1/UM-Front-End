@@ -18,7 +18,7 @@ const ACSemesterField = ({ name, label }: ACFacultyFieldProps) => {
       value: acSemester?.id,
     };
   });
-  console.log(data);
+
   return (
     <FormSelectField
       name={name}
