@@ -2,6 +2,8 @@
 
 import Form from "@/components/Forms/Form";
 import FromInput from "@/components/Forms/FromInput";
+import { SelectOptions } from "@/components/Forms/FromSelectFields";
+import FormMultiSelectField from "@/components/Forms/MultiSelectField";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 
 import { useAddCourseMutation, useCoursesQuery } from "@/redux/api/courseApi";
@@ -13,17 +15,18 @@ const CreateCoursePage = () => {
   const { data, isLoading } = useCoursesQuery({ limit: 10, page: 1 });
 
   const courses = data?.courses;
-  const coursesOptions = courses?.map((course) => {
+
+  const courseOptions = courses?.map((field) => {
     return {
-      label: course?.title,
-      value: course?.id,
+      label: field?.title,
+      value: field?.id,
     };
   });
 
   const onSubmit = async (data: any) => {
     data.credits = parseInt(data?.credits);
 
-    const coursePreRequisitesOptions = data?.coursePreRequisites?.map(
+    const coursePreRequisitesOptions = data?.preRequisiteCourses?.map(
       (id: string) => {
         return {
           courseId: id,
@@ -31,7 +34,7 @@ const CreateCoursePage = () => {
       }
     );
 
-    data.coursePreRequisites = coursePreRequisitesOptions;
+    data.preRequisiteCourses = coursePreRequisitesOptions;
 
     message.loading("Creating.....");
     try {
@@ -66,13 +69,13 @@ const CreateCoursePage = () => {
             <div style={{ margin: "10px 0px" }}>
               <FromInput name="credits" label="Course Credits" />
             </div>
-            {/* <div style={{ margin: "10px 0px" }}>
+            <div style={{ margin: "10px 0px" }}>
               <FormMultiSelectField
-                options={coursesOptions as SelectOptions[]}
-                name="coursePreRequisites"
+                options={courseOptions as SelectOptions[]}
+                name="preRequisiteCourses"
                 label="Pre Requisite Courses"
               />
-            </div> */}
+            </div>
           </Col>
         </Row>
         <Button type="primary" htmlType="submit">
