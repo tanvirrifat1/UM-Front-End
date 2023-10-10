@@ -6,6 +6,7 @@ import FormSelectField, {
   SelectOptions,
 } from "@/components/Forms/FromSelectFields";
 import SemesterRegistrationField from "@/components/Forms/SemesterRegistrationField";
+import FormDynamicFields from "@/components/ui/FormDynamicField";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 import { useAddOfferedCourseSectionMutation } from "@/redux/api/courseSectionApi";
 import { useOfferedCoursesQuery } from "@/redux/api/offerCourseApi";
@@ -105,7 +106,7 @@ const CreateOfferedCourseSectionPage = () => {
             </Button>
           </Col>
           <Col span={16} style={{ margin: "10px 0" }}>
-            {/* <FormDynamicFields /> */}
+            <FormDynamicFields />
           </Col>
         </Row>
       </Form>
