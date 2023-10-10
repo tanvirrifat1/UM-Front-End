@@ -1,5 +1,6 @@
 "use client";
 import ACDepartmentField from "@/components/Forms/ACDepartmentField";
+import ACDepartmentIDField from "@/components/Forms/ACDepartmentIdField";
 import Form from "@/components/Forms/Form";
 import FromInput from "@/components/Forms/FromInput";
 import FormSelectField, {
@@ -82,7 +83,7 @@ const CreateOfferedCourseSectionPage = () => {
               />
             </div>
             <div style={{ margin: "10px 0px" }}>
-              <ACDepartmentField
+              <ACDepartmentIDField
                 name="academicDepartment"
                 label="Academic Department"
                 onChange={(el) => setAcDepartmentId(el)}
