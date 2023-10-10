@@ -5,13 +5,15 @@ import Form from "@/components/Forms/Form";
 import FormSelectField, {
   SelectOptions,
 } from "@/components/Forms/FromSelectFields";
+import OfferedCoursesField from "@/components/Forms/OfferedCoursesField";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
+import { useAddOfferedCourseMutation } from "@/redux/api/offerCourseApi";
 import { useSemesterRegistrationsQuery } from "@/redux/api/semesterRegistrationApi";
 
 import { Button, Col, Row, message } from "antd";
 
 const CreateOfferedCoursePage = () => {
-  //   const [addOfferedCourse] = useAddOfferedCourseMutation();
+  const [addOfferedCourse] = useAddOfferedCourseMutation();
 
   const { data, isLoading } = useSemesterRegistrationsQuery({
     limit: 10,
@@ -31,11 +33,10 @@ const CreateOfferedCoursePage = () => {
   const onSubmit = async (data: any) => {
     message.loading("Creating.....");
     try {
-      //   const res = await addOfferedCourse(data).unwrap();
-      //   if (res?.id) {
-      //     message.success("Offered Course created successfully");
-      //   }
-      console.log(data);
+      const res = await addOfferedCourse(data).unwrap();
+      if (res?.id) {
+        message.success("Offered Course created successfully");
+      }
     } catch (err: any) {
       console.error(err.message);
       message.error(err.message);
@@ -62,9 +63,9 @@ const CreateOfferedCoursePage = () => {
               />
             </div>
 
-            {/* <div style={{ margin: "10px 0px" }}>
+            <div style={{ margin: "10px 0px" }}>
               <OfferedCoursesField name="courseIds" label="Courses" />
-            </div> */}
+            </div>
 
             <div style={{ margin: "10px 0px" }}>
               <ACDepartmentField

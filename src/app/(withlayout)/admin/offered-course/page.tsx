@@ -14,7 +14,10 @@ import ActionBar from "@/components/ui/ActionBar";
 
 import dayjs from "dayjs";
 import { useDebounced } from "@/redux/slice/hooks";
-import { useOfferedCoursesQuery } from "@/redux/api/offerCourseApi";
+import {
+  useDeleteOfferedCourseMutation,
+  useOfferedCoursesQuery,
+} from "@/redux/api/offerCourseApi";
 import UMbreadCrumb from "@/components/ui/UMbreadCrumb";
 
 const OfferedCoursePage = () => {
@@ -30,7 +33,7 @@ const OfferedCoursePage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+  query["searchTerm"] = searchTerm;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -45,14 +48,15 @@ const OfferedCoursePage = () => {
   const offeredCourses = data?.offeredCourses;
   const meta = data?.meta;
 
+  const [deleteOfferedCourse] = useDeleteOfferedCourseMutation();
+
   const deleteHandler = async (id: string) => {
     message.loading("Deleting.....");
     try {
-      console.log(data);
-      //   const res = await deleteOfferedCourse(id);
-      //   if (res) {
-      //     message.success("Offered Course Deleted successfully");
-      //   }
+      const res = await deleteOfferedCourse(id);
+      if (res) {
+        message.success("Offered Course Deleted successfully");
+      }
     } catch (err: any) {
       //   console.error(err.message);
       message.error(err.message);
