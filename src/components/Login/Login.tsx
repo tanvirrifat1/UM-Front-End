@@ -63,7 +63,7 @@ const LoginPage = () => {
         <Col sm={12} md={8} lg={8}>
           <h1 style={{ margin: "15px 0px" }}>First login your account</h1>
           <div>
-            <Form submitHandler={onSubmit}>
+            <Form persistKey="" submitHandler={onSubmit}>
               <div
                 style={{
                   margin: "15px 0px",

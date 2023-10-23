@@ -24,7 +24,7 @@ const Header = () => {
     router.push("/login");
   };
 
-  const { role } = getUserInfo() as any;
+  const { role, userId } = getUserInfo() as any;
 
   const items: MenuProps["items"] = [
     {
@@ -45,14 +45,30 @@ const Header = () => {
           height: "100%",
         }}
       >
-        <p
+        <div
           style={{
-            margin: "0px 5px",
-            fontSize: "16px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {role}
-        </p>
+          <p
+            style={{
+              margin: "0px 5px",
+              fontSize: "16px",
+            }}
+          >
+            {role}
+          </p>
+          <p
+            style={{
+              margin: "0px 5px",
+              fontSize: "16px",
+            }}
+          >
+            {userId}
+          </p>
+        </div>
         <Dropdown menu={{ items }}>
           <Space wrap size={16}>
             <Avatar

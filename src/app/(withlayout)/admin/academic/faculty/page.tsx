@@ -48,20 +48,6 @@ const ACFacultyPage = () => {
   const academicFaculties = data?.academicFaculties;
   const meta = data?.meta;
 
-  // const deleteHandler = async (id: string) => {
-  //   message.loading("Deleting.....");
-  //   try {
-  //     //   console.log(data);
-  //     const res = await deleteAcademicFaculty(id);
-  //     if (res) {
-  //       message.success("Faculty Deleted successfully");
-  //     }
-  //   } catch (err: any) {
-  //     //   console.error(err.message);
-  //     message.error(err.message);
-  //   }
-  // };
-
   const columns = [
     {
       title: "Title",

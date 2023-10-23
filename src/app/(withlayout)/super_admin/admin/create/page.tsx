@@ -53,14 +53,6 @@ const CreateAdminPage = () => {
     }
   };
 
-  // const onSubmit = async (values: any) => {
-  //   try {
-  //     console.log(values);
-  //   } catch (err: any) {
-  //     console.error(err.message);
-  //   }
-  // };
-
   return (
     <div>
       <UMbreadCrumb
@@ -78,7 +70,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin</h1>
 
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form persistKey="" submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",

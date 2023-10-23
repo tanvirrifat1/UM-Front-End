@@ -47,7 +47,11 @@ const CreateFacultyPage = () => {
         ]}
       />
       <h1>Create Faculty</h1>
-      <Form submitHandler={adminOnSubmit} resolver={yupResolver(adminSchema)}>
+      <Form
+        persistKey=""
+        submitHandler={adminOnSubmit}
+        resolver={yupResolver(adminSchema)}
+      >
         {/* faculty information */}
         <div
           style={{

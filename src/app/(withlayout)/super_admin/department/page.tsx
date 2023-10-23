@@ -17,7 +17,6 @@ import React, { useState } from "react";
 import { useDebounced } from "@/redux/slice/hooks";
 import dayjs from "dayjs";
 import Link from "next/link";
-import ModalPage from "@/components/ui/Modal";
 
 const DepartMent = ({ params }: any) => {
   const query: Record<string, any> = {};
